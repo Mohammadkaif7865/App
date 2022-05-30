@@ -16,32 +16,32 @@ let db;
 // app.use(bodyParser.json());
 // app.use(cors());
 app.use(express.json());
-// 1.
+// 1.d
 app.get('/', (req, res) => {
     res.send('Express Server default')
 });
-// 2.
+// 2.d
 app.get('/items/:collections', (req, res) => {
     db.collection(req.params.collections).find().toArray((err, result) => {
         if (err) throw err;
         res.send(result)
     });
 });
-// 3.
+// 3.d
 app.get('/location', (req, res) => {
     db.collection('location').find().toArray((err, result) => {
         if (err) throw err;
         res.send(result)
     });
 });
-// 4.
+// 4.d
 app.get('/mealtype', (req, res) => {
     db.collection('mealtypes').find().toArray((err, result) => {
         if (err) throw err;
         res.send(result)
     });
 });
-// 5.
+// 5.d
 app.get('/restaurants', (req, res) => {
     let stateId = Number(req.query.stateId)
     let mealId = Number(req.query.mealId)
@@ -53,12 +53,12 @@ app.get('/restaurants', (req, res) => {
     } else if (mealId) {
         query = { 'mealTypes.mealtype_id': mealId }
     }
-    db.collection('restaurants').find(query).toArray((err, result) => {
+    db.collection('restaurantdata').find(query).toArray((err, result) => {
         if (err) throw err;
         res.send(result)
     });
 });
-// 6.
+// 6.D
 app.get(`/filter/:mealId`, (req, res) => {
     let sort = { cost: 1 }
     let mealId = Number(req.params.mealId)
