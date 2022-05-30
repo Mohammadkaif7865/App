@@ -1,9 +1,9 @@
 let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
-let cors = require('cors')
+let cors = require('cors');
 let dotenv = require('dotenv');
-dotenv.config()
+dotenv.config();
 let port = process.env.PORT || 9870;
 let mongo = require('mongodb');
 let MongoClient = mongo.MongoClient;
@@ -12,35 +12,36 @@ let mongoUrl = process.env.MongoLiveUrl;
 let db;
 
 //middleware (supporting lib)
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
-app.use(cors())
-
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+// app.use(cors());
+app.use(express.json());
+// 1.
 app.get('/', (req, res) => {
     res.send('Express Server default')
-})
-
+});
+// 2.
 app.get('/items/:collections', (req, res) => {
     db.collection(req.params.collections).find().toArray((err, result) => {
         if (err) throw err;
         res.send(result)
-    })
-})
-
+    });
+});
+// 3.
 app.get('/location', (req, res) => {
     db.collection('location').find().toArray((err, result) => {
         if (err) throw err;
         res.send(result)
-    })
-})
-
+    });
+});
+// 4.
 app.get('/mealtype', (req, res) => {
     db.collection('mealtypes').find().toArray((err, result) => {
         if (err) throw err;
         res.send(result)
-    })
-})
-
+    });
+});
+// 5.
 app.get('/restaurants', (req, res) => {
     let stateId = Number(req.query.stateId)
     let mealId = Number(req.query.mealId)
@@ -55,9 +56,9 @@ app.get('/restaurants', (req, res) => {
     db.collection('restaurants').find(query).toArray((err, result) => {
         if (err) throw err;
         res.send(result)
-    })
-})
-
+    });
+});
+// 6.
 app.get(`/filter/:mealId`, (req, res) => {
     let sort = { cost: 1 }
     let mealId = Number(req.params.mealId)
@@ -93,8 +94,8 @@ app.get(`/filter/:mealId`, (req, res) => {
     db.collection('restaurants').find(query).sort(sort).toArray((err, result) => {
         if (err) throw err;
         res.send(result)
-    })
-})
+    });
+});
 
 // app.get('/details/:id',(req,res) => {
 //   let id = mongo.ObjectId(req.params.id)
@@ -103,23 +104,23 @@ app.get(`/filter/:mealId`, (req, res) => {
 //     res.send(result)
 //   })
 // })
-
+// 7.
 app.get('/details/:id', (req, res) => {
     let id = Number(req.params.id)
     db.collection('restaurants').find({ restaurant_id: id }).toArray((err, result) => {
         if (err) throw err;
         res.send(result)
-    })
-})
-
+    });
+});
+// 8.
 app.get('/menu/:id', (req, res) => {
     let id = Number(req.params.id)
     db.collection('restaurantmenu').find({ restaurant_id: id }).toArray((err, result) => {
         if (err) throw err;
         res.send(result)
-    })
-})
-
+    });
+});
+// 9.
 app.get('/orders', (req, res) => {
     let email = req.query.email;
     let query = {}
@@ -130,29 +131,29 @@ app.get('/orders', (req, res) => {
     db.collection('orders').find(query).toArray((err, result) => {
         if (err) throw err;
         res.send(result)
-    })
-})
-
+    });
+});
+// 10.
 //menu on basis user selected ids
 app.post('/menuItem', (req, res) => {
     if (Array.isArray(req.body)) {
         db.collection('restaurantmenu').find({ menu_id: { $in: req.body } }).toArray((err, result) => {
             if (err) throw err;
-            res.send(result)
+            res.send(result);
         })
     } else {
-        res.send('Invalid Input')
+        res.send('Invalid Input');
     }
-})
-
+});
+// 11.
 app.post('/placeOrder', (req, res) => {
     console.log(req.body)
     db.collection('orders').insert(req.body, (err, result) => {
         if (err) throw err;
-        res.send(result)
-    })
-})
-
+        res.send(result);
+    });
+});
+// 12.
 app.put('/updateOrder/:id', (req, res) => {
     let oid = Number(req.params.id);
     db.collection('orders').updateOne({ orderId: oid }, {
@@ -164,16 +165,16 @@ app.put('/updateOrder/:id', (req, res) => {
     }, (err, result) => {
         if (err) throw err;
         res.send('Order Updated')
-    })
-})
-
+    });
+});
+// 13.
 app.delete('/deleteOrder/:id', (req, res) => {
     let oid = mongo.ObjectId(req.params.id)
     db.collection('orders').remove({ _id: oid }, (err, result) => {
         if (err) throw err;
         res.send('Order Deleted')
-    })
-})
+    });
+});
 
 
 //Connection with db
@@ -183,8 +184,8 @@ MongoClient.connect(mongoUrl, (err, client) => {
     app.listen(port, (err) => {
         if (err) throw err;
         console.log(`Express Server listening on port ${port}`)
-    })
-})
+    });
+});
 
 
 /*
