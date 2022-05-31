@@ -58,7 +58,7 @@ app.get('/restaurants', (req, res) => {
         res.send(result)
     });
 });
-// 6.D
+// 6.
 app.get(`/filter/:mealId`, (req, res) => {
     let sort = { cost: 1 }
     let mealId = Number(req.params.mealId)
@@ -104,10 +104,10 @@ app.get(`/filter/:mealId`, (req, res) => {
 //     res.send(result)
 //   })
 // })
-// 7.
+// 7. D
 app.get('/details/:id', (req, res) => {
     let id = Number(req.params.id)
-    db.collection('restaurants').find({ restaurant_id: id }).toArray((err, result) => {
+    db.collection('restaurantdata').find({ restaurant_id: id }).toArray((err, result) => {
         if (err) throw err;
         res.send(result)
     });
