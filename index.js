@@ -172,7 +172,7 @@ app.delete('/deleteOrder/:id', (req, res) => {
     let oid = mongo.ObjectId(req.params.id)
     db.collection('orders').remove({ _id: oid }, (err, result) => {
         if (err) throw err;
-        res.send('Order Deleted')
+        res.send(result);
     });
 });
 
