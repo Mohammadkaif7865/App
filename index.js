@@ -58,7 +58,7 @@ app.get('/restaurants', (req, res) => {
         res.send(result)
     });
 });
-// 6.
+// 6.D
 app.get(`/filter/:mealId`, (req, res) => {
     let sort = { cost: 1 }
     let mealId = Number(req.params.mealId)
@@ -91,7 +91,7 @@ app.get(`/filter/:mealId`, (req, res) => {
             "mealTypes.mealtype_id": mealId
         }
     }
-    db.collection('restaurants').find(query).sort(sort).toArray((err, result) => {
+    db.collection('restaurantdata').find(query).sort(sort).toArray((err, result) => {
         if (err) throw err;
         res.send(result)
     });
@@ -120,7 +120,7 @@ app.get('/menu/:id', (req, res) => {
         res.send(result);
     });
 });
-// 9.
+// 9. D
 app.get('/orders', (req, res) => {
     let email = req.query.email;
     let query = {}
@@ -133,9 +133,9 @@ app.get('/orders', (req, res) => {
         res.send(result)
     });
 });
-// 10.
+// 10. D
 //menu on basis user selected ids
-app.post('/menuItem', (req, res) => {
+app.get('/menuItem', (req, res) => {
     if (Array.isArray(req.body)) {
         db.collection('restaurantmenu').find({ menu_id: { $in: req.body } }).toArray((err, result) => {
             if (err) throw err;
@@ -145,7 +145,7 @@ app.post('/menuItem', (req, res) => {
         res.send('Invalid Input');
     }
 });
-// 11.
+// 11. D
 app.post('/placeOrder', (req, res) => {
     console.log(req.body)
     db.collection('orders').insert(req.body, (err, result) => {
@@ -153,7 +153,7 @@ app.post('/placeOrder', (req, res) => {
         res.send(result);
     });
 });
-// 12.
+// 12.  D
 app.put('/updateOrder/:id', (req, res) => {
     let oid = Number(req.params.id);
     db.collection('orders').updateOne({ orderId: oid }, {
@@ -167,7 +167,7 @@ app.put('/updateOrder/:id', (req, res) => {
         res.send('Order Updated')
     });
 });
-// 13.
+// 13. D
 app.delete('/deleteOrder/:id', (req, res) => {
     let oid = mongo.ObjectId(req.params.id)
     db.collection('orders').remove({ _id: oid }, (err, result) => {
