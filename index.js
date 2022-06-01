@@ -16,32 +16,32 @@ let db;
 // app.use(bodyParser.json());
 // app.use(cors());
 app.use(express.json());
-// 1.d
+// 1.D
 app.get('/', (req, res) => {
     res.send('Express Server default')
 });
-// 2.d
+// 2.D
 app.get('/items/:collections', (req, res) => {
     db.collection(req.params.collections).find().toArray((err, result) => {
         if (err) throw err;
         res.send(result)
     });
 });
-// 3.d
+// 3.D
 app.get('/location', (req, res) => {
     db.collection('location').find().toArray((err, result) => {
         if (err) throw err;
         res.send(result)
     });
 });
-// 4.d
+// 4.D
 app.get('/mealtype', (req, res) => {
     db.collection('mealtypes').find().toArray((err, result) => {
         if (err) throw err;
         res.send(result)
     });
 });
-// 5.d
+// 5.D
 app.get('/restaurants', (req, res) => {
     let stateId = Number(req.query.stateId)
     let mealId = Number(req.query.mealId)
@@ -112,12 +112,12 @@ app.get('/details/:id', (req, res) => {
         res.send(result)
     });
 });
-// 8.
+// 8.D
 app.get('/menu/:id', (req, res) => {
     let id = Number(req.params.id)
     db.collection('restaurantmenu').find({ restaurant_id: id }).toArray((err, result) => {
         if (err) throw err;
-        res.send(result)
+        res.send(result);
     });
 });
 // 9.
