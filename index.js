@@ -153,7 +153,7 @@ app.post('/placeOrder', (req, res) => {
         res.send(result);
     });
 });
-// 12.  D
+// 12.  D fake out ho gaya
 app.put('/updateOrder/:id', (req, res) => {
     let oid = Number(req.params.id);
     db.collection('orders').updateOne({ orderId: oid }, {
