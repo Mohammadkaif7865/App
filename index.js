@@ -16,32 +16,32 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 // app.use(express.json());
-// 1.D
+// 1.D *
 app.get('/', (req, res) => {
     res.send('Express Server default')
 });
-// 2.D
+// 2.D *
 app.get('/items/:collections', (req, res) => {
     db.collection(req.params.collections).find().toArray((err, result) => {
         if (err) throw err;
         res.send(result)
     });
 });
-// 3.D
+// 3.D *
 app.get('/location', (req, res) => {
     db.collection('location').find().toArray((err, result) => {
         if (err) throw err;
         res.send(result)
     });
 });
-// 4.D
+// 4.D *
 app.get('/mealtype', (req, res) => {
     db.collection('mealtypes').find().toArray((err, result) => {
         if (err) throw err;
         res.send(result)
     });
 });
-// 5.D
+// 5.D *
 app.get('/restaurants', (req, res) => {
     let stateId = Number(req.query.stateId)
     let mealId = Number(req.query.mealId)
@@ -58,7 +58,7 @@ app.get('/restaurants', (req, res) => {
         res.send(result)
     });
 });
-// 6.D
+// 6.D *
 app.get(`/filter/:mealId`, (req, res) => {
     let sort = { cost: 1 }
     let mealId = Number(req.params.mealId)
@@ -104,7 +104,7 @@ app.get(`/filter/:mealId`, (req, res) => {
 //     res.send(result)
 //   })
 // })
-// 7. D
+// 7. D *
 app.get('/details/:id', (req, res) => {
     let id = Number(req.params.id)
     db.collection('restaurantdata').find({ restaurant_id: id }).toArray((err, result) => {
