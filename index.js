@@ -164,7 +164,7 @@ app.put('/updateOrder/:id', (req, res) => {
         }
     }, (err, result) => {
         if (err) throw err;
-        res.send('Order Updated')
+        res.send('Order Updated');
     });
 });
 // 13. D
